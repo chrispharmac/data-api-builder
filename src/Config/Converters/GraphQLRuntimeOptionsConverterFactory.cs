@@ -125,6 +125,37 @@ internal class GraphQLRuntimeOptionsConverterFactory : JsonConverterFactory
                             graphQLRuntimeOptions = graphQLRuntimeOptions with { MultipleMutationOptions = multipleMutationOptionsConverter.Read(ref reader, typeToConvert, options) };
                             break;
 
+                        case "depth-limit":
+                            if (reader.TokenType is JsonTokenType.Null)
+                            {
+                                graphQLRuntimeOptions = graphQLRuntimeOptions with { DepthLimit = null, UserProvidedDepthLimit = true };
+                            }
+                            else if (reader.TokenType is JsonTokenType.Number)
+                            {
+                                int depthLimit;
+                                try
+                                {
+                                    depthLimit = reader.GetInt32();
+                                }
+                                catch (FormatException)
+                                {
+                                    throw new JsonException($"The JSON token value is of the incorrect numeric format.");
+                                }
+
+                                if (depthLimit < -1 || depthLimit == 0)
+                                {
+                                    throw new JsonException($"Invalid depth-limit: {depthLimit}. Specify a depth limit > 0 or remove the existing depth limit by specifying -1.");
+                                }
+
+                                graphQLRuntimeOptions = graphQLRuntimeOptions with { DepthLimit = depthLimit, UserProvidedDepthLimit = true };
+                            }
+                            else
+                            {
+                                throw new JsonException($"Unsupported value entered for depth-limit: {reader.TokenType}");
+                            }
+
+                            break;
+
                         default:
                             throw new JsonException($"Unexpected property {propertyName}");
                     }
@@ -142,6 +173,18 @@ internal class GraphQLRuntimeOptionsConverterFactory : JsonConverterFactory
             writer.WriteBoolean("enabled", value.Enabled);
             writer.WriteString("path", value.Path);
             writer.WriteBoolean("allow-introspection", value.AllowIntrospection);
+
+            if (value.UserProvidedDepthLimit)
+            {
+                if (value.DepthLimit is null)
+                {
+                    writer.WriteNull("depth-limit");
+                }
+                else
+                {
+                    writer.WriteNumber("depth-limit", value.DepthLimit.Value);
+                }
+            }
 
             if (value.MultipleMutationOptions is not null)
             {
