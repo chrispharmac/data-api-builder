@@ -1,0 +1,3501 @@
+{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v0.10.23/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "Database=medical_devices;Server=tcp:pharmacsql-azure-dev.database.windows.net,1433;Initial Catalog=Medical_Devices;Persist Security Info=True;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=300;Authentication='Active Directory Default';",
+    "options": {
+      "set-session-context": false
+    }
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/api",
+      "request-body-strict": true
+    },
+    "graphql": {
+      "enabled": true,
+      "path": "/graphql",
+      "allow-introspection": true
+    },
+    "host": {
+      "cors": {
+        "origins": [
+          "*"
+        ],
+        "allow-credentials": false
+      },
+      "authentication": {
+        "provider": "AzureAD",
+        "jwt": {
+          "issuer": "https://login.microsoftonline.com/2a64c3b0-239f-425b-b657-b2642c95b456/oauth2/v2.0/authorize",
+          "audience": "c8cbd347-8f46-4efa-b1f4-b72e308b80e4"
+      },
+      "mode": "development"
+    }
+  },
+  "entities": {
+    "Contract": {
+      "source": {
+        "object": "con.Contracts",
+        "type": "table",
+        "key-fields": [
+          "ContractID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Contract",
+          "plural": "Contracts"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Contract_Supplier": {
+          "cardinality": "one",
+          "target.entity": "Supplier",
+          "source.fields": [
+            "SupplierID"
+          ],
+          "target.fields": [
+            "SupplierID"
+          ],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "Contract_TerminationReason": {
+          "cardinality": "one",
+          "target.entity": "TerminationReason",
+          "source.fields": [
+            "TerminationReasonID"
+          ],
+          "target.fields": [
+            "TerminationReasonID"
+          ],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "ContractsCategory": {
+      "source": {
+        "object": "con.ContractsCategories",
+        "type": "table",
+        "key-fields": [
+          "CategoryID",
+          "CategoryNumber",
+          "ContractID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "ContractsCategory",
+          "plural": "ContractsCategories"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ContractsDevice": {
+      "source": {
+        "object": "con.ContractsDevices",
+        "type": "table",
+        "key-fields": [
+          "ContractDeviceID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "ContractsDevice",
+          "plural": "ContractsDevices"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "DHB": {
+      "source": {
+        "object": "con.DHBs",
+        "type": "table",
+        "key-fields": [
+          "DHBID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "DHB",
+          "plural": "DHBs"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Hospital": {
+      "source": {
+        "object": "con.Hospitals",
+        "type": "table",
+        "key-fields": [
+          "HospitalID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Hospital",
+          "plural": "Hospitals"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "KeyContact": {
+      "source": {
+        "object": "con.KeyContacts",
+        "type": "table",
+        "key-fields": [
+          "KeyContactID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "KeyContact",
+          "plural": "KeyContacts"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "MSCChangeStatus": {
+      "source": {
+        "object": "con.MSCChangeStatuses",
+        "type": "table",
+        "key-fields": [
+          "MSCChangeStatusID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "MSCChangeStatus",
+          "plural": "MSCChangeStatuses"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "MSCDecisionType": {
+      "source": {
+        "object": "con.MSCDecisionTypes",
+        "type": "table",
+        "key-fields": [
+          "MSCDecisionTypeID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "MSCDecisionType",
+          "plural": "MSCDecisionTypes"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "MSCReason": {
+      "source": {
+        "object": "con.MSCReasons",
+        "type": "table",
+        "key-fields": [
+          "MSCReasonID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "MSCReason",
+          "plural": "MSCReasons"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "MSC": {
+      "source": {
+        "object": "con.MSCs",
+        "type": "table",
+        "key-fields": [
+          "MSCID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "MSC",
+          "plural": "MSCs"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Objective_Contract_Agreement": {
+      "source": {
+        "object": "con.Objective_Contract_Agreements",
+        "type": "table",
+        "key-fields": [
+          "O_Contract_AgreementID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Objective_Contract_Agreement",
+          "plural": "Objective_Contract_Agreements"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Objective_Contract_Schedule1": {
+      "source": {
+        "object": "con.Objective_Contract_Schedule1s",
+        "type": "table",
+        "key-fields": [
+          "O_Contract_Schedule1ID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Objective_Contract_Schedule1",
+          "plural": "Objective_Contract_Schedule1s"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Objective_MSC_SupplierNotification": {
+      "source": {
+        "object": "con.Objective_MSC_SupplierNotifications",
+        "type": "table",
+        "key-fields": [
+          "O_MSC_SupplierNotificationID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Objective_MSC_SupplierNotification",
+          "plural": "Objective_MSC_SupplierNotifications"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Objective_MSC": {
+      "source": {
+        "object": "con.Objective_MSCs",
+        "type": "table",
+        "key-fields": [
+          "O_MSCID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Objective_MSC",
+          "plural": "Objective_MSCs"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Objective_S1_Amendment": {
+      "source": {
+        "object": "con.Objective_S1_Amendments",
+        "type": "table",
+        "key-fields": [
+          "O_S1_AmendmentID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Objective_S1_Amendment",
+          "plural": "Objective_S1_Amendments"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Objective_SKR_KPI": {
+      "source": {
+        "object": "con.Objective_SKR_KPIs",
+        "type": "table",
+        "key-fields": [
+          "O_SKA_KPIID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Objective_SKR_KPI",
+          "plural": "Objective_SKR_KPIs"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Objective_SKR_SalesData": {
+      "source": {
+        "object": "con.Objective_SKR_SalesDatas",
+        "type": "table",
+        "key-fields": [
+          "O_SKA_SalesDataID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Objective_SKR_SalesData",
+          "plural": "Objective_SKR_SalesDatas"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Objective_TCA_Amendment": {
+      "source": {
+        "object": "con.Objective_TCA_Amendments",
+        "type": "table",
+        "key-fields": [
+          "O_TCA_AmendmentID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Objective_TCA_Amendment",
+          "plural": "Objective_TCA_Amendments"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Objective_TCA_SignedPDF": {
+      "source": {
+        "object": "con.Objective_TCA_SignedPDFs",
+        "type": "table",
+        "key-fields": [
+          "O_TCA_SignedPDFID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Objective_TCA_SignedPDF",
+          "plural": "Objective_TCA_SignedPDFs"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "PHARMACCM": {
+      "source": {
+        "object": "con.PHARMACCMs",
+        "type": "table",
+        "key-fields": [
+          "PHARMACCMID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "PHARMACCM",
+          "plural": "PHARMACCMs"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Purchaser": {
+      "source": {
+        "object": "con.Purchasers",
+        "type": "table",
+        "key-fields": [
+          "PurchaserID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Purchaser",
+          "plural": "Purchasers"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Rebate": {
+      "source": {
+        "object": "con.Rebates",
+        "type": "table",
+        "key-fields": [
+          "ContractRebateID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Rebate",
+          "plural": "Rebates"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "RebatesQuarterlyDHBData": {
+      "source": {
+        "object": "con.RebatesQuarterlyDHBData",
+        "type": "table",
+        "key-fields": [
+          "RebateQuarterlyDHBDataID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "RebatesQuarterlyDHBData",
+          "plural": "RebatesQuarterlyDHBDatas"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ReportingPeriod": {
+      "source": {
+        "object": "con.ReportingPeriods",
+        "type": "table",
+        "key-fields": [
+          "ReportingPeriodID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "ReportingPeriod",
+          "plural": "ReportingPeriods"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ResolveToType": {
+      "source": {
+        "object": "con.ResolveToTypes",
+        "type": "table",
+        "key-fields": [
+          "ResolveToTypeID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "ResolveToType",
+          "plural": "ResolveToTypes"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "SalesAndKPIReporting": {
+      "source": {
+        "object": "con.SalesAndKPIReporting",
+        "type": "table",
+        "key-fields": [
+          "SalesAndKPIReportingID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "SalesAndKPIReporting",
+          "plural": "SalesAndKPIReportings"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Schedule1Change": {
+      "source": {
+        "object": "con.Schedule1Changes",
+        "type": "table",
+        "key-fields": [
+          "Schedule1ChangeID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Schedule1Change",
+          "plural": "Schedule1Changes"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Supplier": {
+      "source": {
+        "object": "con.Suppliers",
+        "type": "table",
+        "key-fields": [
+          "SupplierID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Supplier",
+          "plural": "Suppliers"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "TAndCAmendment": {
+      "source": {
+        "object": "con.TAndCAmendments",
+        "type": "table",
+        "key-fields": [
+          "TAndCAmendmentID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "TAndCAmendment",
+          "plural": "TAndCAmendments"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "TerminationReason": {
+      "source": {
+        "object": "con.TerminationReasons",
+        "type": "table",
+        "key-fields": [
+          "TerminationReasonID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "TerminationReason",
+          "plural": "TerminationReasons"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Usage": {
+      "source": {
+        "object": "con.Usage",
+        "type": "table",
+        "key-fields": [
+          "UsageID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Usage",
+          "plural": "Usages"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Permission": {
+      "source": {
+        "object": "dbo.Permissions",
+        "type": "table",
+        "key-fields": [
+          "Function",
+          "User"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Permission",
+          "plural": "Permissions"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ReportParameter": {
+      "source": {
+        "object": "dbo.ReportParameters",
+        "type": "table",
+        "key-fields": [
+          "ReportParameterID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "ReportParameter",
+          "plural": "ReportParameters"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Report": {
+      "source": {
+        "object": "dbo.Reports",
+        "type": "table",
+        "key-fields": [
+          "ReportID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Report",
+          "plural": "Reports"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ScheduleExportInfo": {
+      "source": {
+        "object": "dbo.ScheduleExportInfo",
+        "type": "table",
+        "key-fields": [
+          "ScheduleExportInfoID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "ScheduleExportInfo",
+          "plural": "ScheduleExportInfos"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Version": {
+      "source": {
+        "object": "dbo.Version",
+        "type": "table",
+        "key-fields": [
+          "VersionID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Version",
+          "plural": "Versions"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "BrandName": {
+      "source": {
+        "object": "dev.BrandNames",
+        "type": "table",
+        "key-fields": [
+          "BrandNameID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "BrandName",
+          "plural": "BrandNames"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Category": {
+      "source": {
+        "object": "dev.Categories",
+        "type": "table",
+        "key-fields": [
+          "CategoryID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Category",
+          "plural": "Categories"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ChangeType": {
+      "source": {
+        "object": "dev.ChangeTypes",
+        "type": "table",
+        "key-fields": [
+          "ChangeTypeID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "ChangeType",
+          "plural": "ChangeTypes"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Country": {
+      "source": {
+        "object": "dev.Countries",
+        "type": "table",
+        "key-fields": [
+          "CountryID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Country",
+          "plural": "Countries"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "DeviceCountry": {
+      "source": {
+        "object": "dev.DeviceCountries",
+        "type": "table",
+        "key-fields": [
+          "DeviceCountryID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "DeviceCountry",
+          "plural": "DeviceCountries"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "DeviceName": {
+      "source": {
+        "object": "dev.DeviceNames",
+        "type": "table",
+        "key-fields": [
+          "DeviceNameID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "DeviceName",
+          "plural": "DeviceNames"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Device": {
+      "source": {
+        "object": "dev.Devices",
+        "type": "table",
+        "key-fields": [
+          "DeviceID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Device",
+          "plural": "Devices"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "DevicesCategory": {
+      "source": {
+        "object": "dev.DevicesCategories",
+        "type": "table",
+        "key-fields": [
+          "CategoryID",
+          "CategoryNumber",
+          "DeviceID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "DevicesCategory",
+          "plural": "DevicesCategories"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "DeviceSortDimension": {
+      "source": {
+        "object": "dev.DeviceSortDimensions",
+        "type": "table",
+        "key-fields": [
+          "DeviceID",
+          "SortDimensionNumber"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "DeviceSortDimension",
+          "plural": "DeviceSortDimensions"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Manufacturer": {
+      "source": {
+        "object": "dev.Manufacturers",
+        "type": "table",
+        "key-fields": [
+          "ManufacturerID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Manufacturer",
+          "plural": "Manufacturers"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Price": {
+      "source": {
+        "object": "dev.Prices",
+        "type": "table",
+        "key-fields": [
+          "PriceID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Price",
+          "plural": "Prices"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ScheduleExportParameter": {
+      "source": {
+        "object": "dev.ScheduleExportParameters",
+        "type": "table",
+        "key-fields": [
+          "Category",
+          "ScheduleFromDate"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "ScheduleExportParameter",
+          "plural": "ScheduleExportParameters"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Subcategory": {
+      "source": {
+        "object": "dev.Subcategories",
+        "type": "table",
+        "key-fields": [
+          "SubcategoryID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Subcategory",
+          "plural": "Subcategories"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "SubcategoryDetail": {
+      "source": {
+        "object": "dev.SubcategoryDetails",
+        "type": "table",
+        "key-fields": [
+          "SubcategoryDetailsID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "SubcategoryDetail",
+          "plural": "SubcategoryDetails"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Supplier_UOM": {
+      "source": {
+        "object": "dev.Supplier_UOMs",
+        "type": "table",
+        "key-fields": [
+          "UOMID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Supplier_UOM",
+          "plural": "Supplier_UOMs"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "SupplyStatus": {
+      "source": {
+        "object": "dev.SupplyStatuses",
+        "type": "table",
+        "key-fields": [
+          "SupplyStatusID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "SupplyStatus",
+          "plural": "SupplyStatuses"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "UOM": {
+      "source": {
+        "object": "dev.UOMs",
+        "type": "table",
+        "key-fields": [
+          "UOMID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "UOM",
+          "plural": "UOMs"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ExportDate": {
+      "source": {
+        "object": "hsc.ExportDates",
+        "type": "table",
+        "key-fields": [
+          "ExportDateID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "ExportDate",
+          "plural": "ExportDates"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ExportType": {
+      "source": {
+        "object": "nos.ExportTypes",
+        "type": "table",
+        "key-fields": [
+          "ExportTypeID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "ExportType",
+          "plural": "ExportTypes"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Import_Device": {
+      "source": {
+        "object": "stg.Import_Devices",
+        "type": "table",
+        "key-fields": [
+          "Import_DevicesID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Import_Device",
+          "plural": "Import_Devices"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Import_MSC": {
+      "source": {
+        "object": "stg.Import_MSCs",
+        "type": "table",
+        "key-fields": [
+          "Import_MSCID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Import_MSC",
+          "plural": "Import_MSCs"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "Import_Usage": {
+      "source": {
+        "object": "stg.Import_Usage",
+        "type": "table",
+        "key-fields": [
+          "Import_UsageID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Import_Usage",
+          "plural": "Import_Usages"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [
+                  "TimeStamp"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "vwContracts": {
+      "source": {
+        "object": "con.vwContracts",
+        "type": "view",
+        "key-fields": [
+          "ContractID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwContracts",
+          "plural": "vwContracts"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "uspUpdateAllStatistics": {
+      "source": {
+        "object": "dbo.uspUpdateAllStatistics",
+        "type": "stored-procedure"
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspUpdateAllStatistics",
+          "plural": "uspUpdateAllStatistics"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "post"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwContracts_Active": {
+      "source": {
+        "object": "con.vwContracts_Active",
+        "type": "view",
+        "key-fields": [
+          "ContractID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwContracts_Active",
+          "plural": "vwContracts_Actives"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwContractsDevices_Available": {
+      "source": {
+        "object": "con.vwContractsDevices_Available",
+        "type": "view",
+        "key-fields": [
+          "CDAID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwContractsDevices_Available",
+          "plural": "vwContractsDevices_Availables"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwContractsDevices_Contracted": {
+      "source": {
+        "object": "con.vwContractsDevices_Contracted",
+        "type": "view",
+        "key-fields": [
+          "CDCID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwContractsDevices_Contracted",
+          "plural": "vwContractsDevices_Contracteds"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwMSCs_GridListing_Summary": {
+      "source": {
+        "object": "con.vwMSCs_GridListing_Summary",
+        "type": "view",
+        "key-fields": [
+          "MSCID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwMSCs_GridListing_Summary",
+          "plural": "vwMSCs_GridListing_Summaries"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwMSCs_PendingToBeApplied": {
+      "source": {
+        "object": "con.vwMSCs_PendingToBeApplied",
+        "type": "view",
+        "key-fields": [
+          "MSCID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwMSCs_PendingToBeApplied",
+          "plural": "vwMSCs_PendingToBeApplieds"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vw_completely_delisted": {
+      "source": {
+        "object": "dev.vw_completely_delisted",
+        "type": "view",
+        "key-fields": [
+          "deviceid"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vw_completely_delisted",
+          "plural": "vw_completely_delisteds"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vw_Delisted_Products": {
+      "source": {
+        "object": "dev.vw_Delisted_Products",
+        "type": "view",
+        "key-fields": [
+          "SupplierProductCode",
+          "Tier",
+          "EffectiveDate"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vw_Delisted_Products",
+          "plural": "vw_Delisted_Products"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vw_Device_Option_Groups": {
+      "source": {
+        "object": "dev.vw_Device_Option_Groups",
+        "type": "view",
+        "key-fields": [
+          "ContractNumber",
+          "CategoryName1",
+          "Tier",
+          "OptionGroupLevel",
+          "OptionGroupDescription"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vw_Device_Option_Groups",
+          "plural": "vw_Device_Option_Groups"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwDevices": {
+      "source": {
+        "object": "dev.vwDevices",
+        "type": "view",
+        "key-fields": [
+          "DeviceID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwDevices",
+          "plural": "vwDevices"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwDevices_MSCs_AttributeChangeHistory": {
+      "source": {
+        "object": "dev.vwDevices_MSCs_AttributeChangeHistory",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "PriceID",
+          "StartPeriod",
+          "EndPeriod"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwDevices_MSCs_AttributeChangeHistory",
+          "plural": "vwDevices_MSCs_AttributeChangeHistories"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwDevices_PackSize_EffectiveDates": {
+      "source": {
+        "object": "dev.vwDevices_PackSize_EffectiveDates",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "EffectiveDate"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwDevices_PackSize_EffectiveDates",
+          "plural": "vwDevices_PackSize_EffectiveDates"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwDevices_Prices_Current": {
+      "source": {
+        "object": "dev.vwDevices_Prices_Current",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "Tier",
+          "EffectiveDate"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwDevices_Prices_Current",
+          "plural": "vwDevices_Prices_Currents"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwDevices_ScheduleExport": {
+      "source": {
+        "object": "dev.vwDevices_ScheduleExport",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "Tier",
+          "EffectiveDate",
+          "ChangeType"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwDevices_ScheduleExport",
+          "plural": "vwDevices_ScheduleExports"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwDevices_ScheduleExport_WithSubcategory": {
+      "source": {
+        "object": "dev.vwDevices_ScheduleExport_WithSubcategory",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "Tier",
+          "EffectiveDate",
+          "ChangeType"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwDevices_ScheduleExport_WithSubcategory",
+          "plural": "vwDevices_ScheduleExport_WithSubcategories"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwDevices_WithContractInfo": {
+      "source": {
+        "object": "dev.vwDevices_WithContractInfo",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "ContractID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwDevices_WithContractInfo",
+          "plural": "vwDevices_WithContractInfos"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwExport_Schedule_Excel": {
+      "source": {
+        "object": "dev.vwExport_Schedule_Excel",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "Tier",
+          "EffectiveDate"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwExport_Schedule_Excel",
+          "plural": "vwExport_Schedule_Excels"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwExport_Schedule_Excel_N_A": {
+      "source": {
+        "object": "dev.vwExport_Schedule_Excel_N_A",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "EffectiveDate"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwExport_Schedule_Excel_N_A",
+          "plural": "vwExport_Schedule_Excel_N_As"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwExport_Schedule_WithSubcategory": {
+      "source": {
+        "object": "dev.vwExport_Schedule_WithSubcategory",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "Tier",
+          "EffectiveDate"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwExport_Schedule_WithSubcategory",
+          "plural": "vwExport_Schedule_WithSubcategories"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwExport_Schedule_WithSubcategory_N_A": {
+      "source": {
+        "object": "dev.vwExport_Schedule_WithSubcategory_N_A",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "Tier",
+          "EffectiveDate"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwExport_Schedule_WithSubcategory_N_A",
+          "plural": "vwExport_Schedule_WithSubcategory_N_As"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Devices_Schedule_AllTiers": {
+      "source": {
+        "object": "dev.vwReport_Devices_Schedule_AllTiers",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "Tier",
+          "EffectiveDate",
+          "ExpiryDate"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Devices_Schedule_AllTiers",
+          "plural": "vwReport_Devices_Schedule_AllTiers"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vw_Import_Devices": {
+      "source": {
+        "object": "rpt.vw_Import_Devices",
+        "type": "view",
+        "key-fields": [
+          "Import_DevicesID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vw_Import_Devices",
+          "plural": "vw_Import_Devices"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vw_Usage_Summary": {
+      "source": {
+        "object": "rpt.vw_Usage_Summary",
+        "type": "view",
+        "key-fields": [
+          "ContractId",
+          "CategoryId",
+          "ReportingPeriodId"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vw_Usage_Summary",
+          "plural": "vw_Usage_Summaries"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwDevices_NewListingCountsByQuarter": {
+      "source": {
+        "object": "rpt.vwDevices_NewListingCountsByQuarter",
+        "type": "view",
+        "key-fields": [
+          "Year",
+          "Quarter"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwDevices_NewListingCountsByQuarter",
+          "plural": "vwDevices_NewListingCountsByQuarters"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Contracts_Devices_CategoryCounts": {
+      "source": {
+        "object": "rpt.vwReport_Contracts_Devices_CategoryCounts",
+        "type": "view",
+        "key-fields": [
+          "ContractNumber",
+          "Category"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Contracts_Devices_CategoryCounts",
+          "plural": "vwReport_Contracts_Devices_CategoryCounts"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Contracts_ReportingStatus": {
+      "source": {
+        "object": "rpt.vwReport_Contracts_ReportingStatus",
+        "type": "view",
+        "key-fields": [
+          "ContractNumber",
+          "Category",
+          "ReportingPeriodID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Contracts_ReportingStatus",
+          "plural": "vwReport_Contracts_ReportingStatuses"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Contracts_Summary": {
+      "source": {
+        "object": "rpt.vwReport_Contracts_Summary",
+        "type": "view",
+        "key-fields": [
+          "[Contract Number]",
+          "[Contract Category Names]"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Contracts_Summary",
+          "plural": "vwReport_Contracts_Summaries"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Devices_AllTiers_ForBulkMSC": {
+      "source": {
+        "object": "rpt.vwReport_Devices_AllTiers_ForBulkMSC",
+        "type": "view",
+        "key-fields": [
+          "DeviceID",
+          "PriceID",
+          "EffectiveDate"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Devices_AllTiers_ForBulkMSC",
+          "plural": "vwReport_Devices_AllTiers_ForBulkMSCs"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Devices_AllWithContractInfo": {
+      "source": {
+        "object": "rpt.vwReport_Devices_AllWithContractInfo",
+        "type": "view",
+        "key-fields": [
+          "ContractNumber",
+          "SupplierProductCode"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Devices_AllWithContractInfo",
+          "plural": "vwReport_Devices_AllWithContractInfos"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Devices_AssignedCategories": {
+      "source": {
+        "object": "rpt.vwReport_Devices_AssignedCategories",
+        "type": "view",
+        "key-fields": [
+          "Category"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Devices_AssignedCategories",
+          "plural": "vwReport_Devices_AssignedCategories"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Devices_CategoriesInUse": {
+      "source": {
+        "object": "rpt.vwReport_Devices_CategoriesInUse",
+        "type": "view",
+        "key-fields": [
+          "[Device Contract Category]",
+          "[Device Category Name 1]"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Devices_CategoriesInUse",
+          "plural": "vwReport_Devices_CategoriesInUses"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Devices_StagingChecks": {
+      "source": {
+        "object": "rpt.vwReport_Devices_StagingChecks",
+        "type": "view",
+        "key-fields": [
+          "LineNumber",
+          "Field"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Devices_StagingChecks",
+          "plural": "vwReport_Devices_StagingChecks"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Purchasers": {
+      "source": {
+        "object": "rpt.vwReport_Purchasers",
+        "type": "view",
+        "key-fields": [
+          "Hospital",
+          "PurchaserID"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Purchasers",
+          "plural": "vwReport_Purchasers"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Suppliers_KeyContacts_Summary": {
+      "source": {
+        "object": "rpt.vwReport_Suppliers_KeyContacts_Summary",
+        "type": "view",
+        "key-fields": [
+          "ContractNumber",
+          "LastName",
+          "FirstName"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Suppliers_KeyContacts_Summary",
+          "plural": "vwReport_Suppliers_KeyContacts_Summaries"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "vwReport_Suppliers_Summary": {
+      "source": {
+        "object": "rpt.vwReport_Suppliers_Summary",
+        "type": "view",
+        "key-fields": [
+          "SupplierLegalName"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "vwReport_Suppliers_Summary",
+          "plural": "vwReport_Suppliers_Summaries"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*"
+            }
+          ]
+        }
+      ]
+    },
+    "uspDevices_Import": {
+      "source": {
+        "object": "dev.uspDevices_Import",
+        "type": "stored-procedure",
+        "parameters": {
+          "CommitOnSuccess": 0
+        }
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspDevices_Import",
+          "plural": "uspDevices_Imports"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "post"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "execute"
+            }
+          ]
+        }
+      ]
+    },
+    "uspDevices_Schedule1_Export": {
+      "source": {
+        "object": "dev.uspDevices_Schedule1_Export",
+        "type": "stored-procedure",
+        "parameters": {
+          "ScheduleDate": "2001-01-01",
+          "ContractID": 0,
+          "printSql": 0
+        }
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspDevices_Schedule1_Export",
+          "plural": "uspDevices_Schedule1_Exports"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "execute"
+            }
+          ]
+        }
+      ]
+    },
+    "uspMSCs_ApplyPending": {
+      "source": {
+        "object": "con.uspMSCs_ApplyPending",
+        "type": "stored-procedure",
+        "parameters": {
+          "ChangeFromDate": "2001-01-01",
+          "CommitOnSuccess": 0
+        }
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspMSCs_ApplyPending",
+          "plural": "uspMSCs_ApplyPendings"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "post"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "execute"
+            }
+          ]
+        }
+      ]
+    },
+    "uspMSCs_ImportFromStaging": {
+      "source": {
+        "object": "con.uspMSCs_ImportFromStaging",
+        "type": "stored-procedure",
+        "parameters": {
+          "CommitOnSuccess": 0
+        }
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspMSCs_ImportFromStaging",
+          "plural": "uspMSCs_ImportFromStagings"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "post"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "execute"
+            }
+          ]
+        }
+      ]
+    },
+    "uspReport_Usage_StagingChecks": {
+      "source": {
+        "object": "rpt.uspReport_Usage_StagingChecks",
+        "type": "stored-procedure",
+        "parameters": {
+          "CostThreshold": 1
+        }
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspReport_Usage_StagingChecks",
+          "plural": "uspReport_Usage_StagingChecks"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "execute"
+            }
+          ]
+        }
+      ]
+    },
+    "uspUsage_Import": {
+      "source": {
+        "object": "con.uspUsage_Import",
+        "type": "stored-procedure",
+        "parameters": {
+          "CommitOnSuccess": 0
+        }
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspUsage_Import",
+          "plural": "uspUsage_Imports"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "post"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "execute"
+            }
+          ]
+        }
+      ]
+    },
+    "uspUsage_Clear": {
+      "source": {
+        "object": "dev.uspUsage_Clear",
+        "type": "stored-procedure",
+        "parameters": {
+          "ReportingPeriodId": 0,
+          "ContractId": 0,
+          "CategoryId": 0
+        }
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspUsage_Clear",
+          "plural": "uspUsage_Clears"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "execute"
+            }
+          ]
+        }
+      ]
+    },
+    "uspMSCBulkImport_GetSupplierContracts": {
+      "source": {
+        "object": "xls.uspMSCBulkImport_GetSupplierContracts",
+        "type": "stored-procedure",
+        "parameters": {
+          "SupplierName": "None"
+        }
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspMSCBulkImport_GetSupplierContracts",
+          "plural": "uspMSCBulkImport_GetSupplierContracts"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "execute"
+            }
+          ]
+        }
+      ]
+    },
+    "uspMSCBulkImport_GetSupplierDevicesMSCBaseData": {
+      "source": {
+        "object": "xls.uspMSCBulkImport_GetSupplierDevicesMSCBaseData",
+        "type": "stored-procedure",
+        "parameters": {
+          "SupplierName": "None"
+        }
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspMSCBulkImport_GetSupplierDevicesMSCBaseData",
+          "plural": "uspMSCBulkImport_GetSupplierDevicesMSCBaseDatas"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "execute"
+            }
+          ]
+        }
+      ]
+    },
+    "uspMSCBulkImport_GetSupplierPrices": {
+      "source": {
+        "object": "xls.uspMSCBulkImport_GetSupplierPrices",
+        "type": "stored-procedure",
+        "parameters": {
+          "SupplierName": "None"
+        }
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspMSCBulkImport_GetSupplierPrices",
+          "plural": "uspMSCBulkImport_GetSupplierPrices"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "execute"
+            }
+          ]
+        }
+      ]
+    },
+    "uspDevices_Schedule_Export_WithTiersMetadata": {
+      "source": {
+        "object": "dev.uspDevices_Schedule_Export_WithTiersMetadata",
+        "type": "stored-procedure",
+        "parameters": {
+          "EffectiveDate": "2001-01-01"
+        }
+      },
+      "graphql": {
+        "enabled": true,
+        "operation": "mutation",
+        "type": {
+          "singular": "uspDevices_Schedule_Export_WithTiersMetadata",
+          "plural": "uspDevices_Schedule_Export_WithTiersMetadatas"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "methods": [
+          "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "execute"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0;net6.0</TargetFrameworks>
+        <TargetFrameworks>net6.0</TargetFrameworks>
         <Configurations>Debug;Release;Docker</Configurations>
         <OutputPath>$(BaseOutputPath)\engine</OutputPath>
         <RuntimeIdentifiers>win-x64;linux-x64;osx-x64</RuntimeIdentifiers>
@@ -20,6 +20,18 @@
     <ItemGroup>
         <None Remove="schema.gql" />
     </ItemGroup>
+
+    <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+      <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    </PropertyGroup>
+
+    <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+      <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    </PropertyGroup>
+
+    <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net6.0|AnyCPU'">
+      <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    </PropertyGroup>
 
     <!--
     Set the CopyToOutputDirectory action based on the configuration.
